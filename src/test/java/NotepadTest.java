@@ -1,7 +1,9 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -18,7 +20,7 @@ public class NotepadTest {
 
 
    @Before
-    public void openBrowser()
+   public void openBrowser()
    {
        WebDriverManager.chromedriver().setup();
 
@@ -27,23 +29,25 @@ public class NotepadTest {
    }
 
    @Test
-    public void loadTest()
+   public void loadTest()
    {
         driver.get("https://anotepad.com/");
-        driver.findElement(By.id("edit_title")).sendKeys("My New Note");
+        driver.findElement(By.id("edit_title")).sendKeys("Hello Yaroslav and Oleksandr!");
 
         driver.findElement(By.id("btnSaveNote")).click();
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(".alert, alert-warning"), "You have saved your note as a"));
+        driver.findElement(By.cssSelector(".delete")).click();
 
-        driver.findElement(By.id("edit_textarea")).sendKeys("Hello Yaroslav and Oleksandr!");
-        driver.findElement(By.id("btnSaveNote")).click();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".alert, alert-warning")));
+        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+        alert.accept();
 
 
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("savedNotes"), "No note here."));
    }
 
-//   @After
-//    public void closeBrowser()
-//   {
-//       driver.quit();
-//   }
+   @After
+   public void closeBrowser()
+   {
+       driver.quit();
+   }
 }
