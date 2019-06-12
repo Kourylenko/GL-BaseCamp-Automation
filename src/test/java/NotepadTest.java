@@ -14,10 +14,8 @@ import java.util.concurrent.TimeUnit;
 
 public class NotepadTest {
 
-
    WebDriver driver;
    WebDriverWait wait;
-
 
    @Before
    public void openBrowser()
@@ -33,14 +31,12 @@ public class NotepadTest {
    {
         driver.get("https://anotepad.com/");
         driver.findElement(By.id("edit_title")).sendKeys("Hello Yaroslav and Oleksandr!");
-
         driver.findElement(By.id("btnSaveNote")).click();
         wait.until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(".alert, alert-warning"), "You have saved your note as a"));
         driver.findElement(By.cssSelector(".delete")).click();
 
         Alert alert = wait.until(ExpectedConditions.alertIsPresent());
         alert.accept();
-
 
         wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("savedNotes"), "No note here."));
    }
