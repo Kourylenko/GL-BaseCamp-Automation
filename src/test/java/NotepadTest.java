@@ -19,9 +19,7 @@ public class NotepadTest {
    public void openBrowser()
    {
        WebDriverManager.chromedriver().setup();
-
        driver = new ChromeDriver();
-
        notePad = new Notepad(driver);
    }
 
