@@ -16,9 +16,7 @@
 hs_err_pid*
 
 ###Allure###
-.allure
-
-
+.allure/allure-2.7.0
 
 ### Gradle ###
 .gradle
