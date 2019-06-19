@@ -15,6 +15,7 @@ public class Notepad {
 
     private WebDriver driver;
     private WebDriverWait wait;
+
     public Notepad (WebDriver driver)
     {
         this.driver = driver;

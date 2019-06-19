@@ -30,13 +30,13 @@ public class NotepadTest {
        String note = "Hello!";
        notePad.open()
                .setTitle(title)
-               .setContent(note)
-               .save();
+               .setContent(note);
+//               .save();
 
-       Assert.assertEquals(note,notePad.getNoteTitle());
+       Assert.assertEquals(title,notePad.getNoteTitle());
        Assert.assertEquals(note,notePad.getNoteContent());
 
-       notePad.delete();
+//       notePad.delete();
    }
 
    @After
