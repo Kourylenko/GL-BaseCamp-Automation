@@ -7,32 +7,32 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class NotepadTest {
 
-   WebDriver driver;
-   Notepad notePad;
+    WebDriver driver;
+    Notepad notePad;
 
-   @BeforeClass
-   public void openBrowser()
-   {
-       WebDriverManager.chromedriver().setup();
-       driver = new ChromeDriver();
-       notePad = new Notepad(driver);
-   }
+    @Before
+    public void openBrowser()
+    {
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        notePad = new Notepad(driver);
+    }
 
-   @Test
-   @DisplayName("GL 457,460: Create, Save, Delete notes for an unregistered user")
-   public void testCreateAndDeleteNote()
-   {
-       String title = "My New Note";
-       String note = "Hello!";
-       notePad.open()
-               .setTitle(title)
-               .setContent(note)
-               .saveNote();
-       Assert.assertEquals(title,notePad.getNoteTitle());
-       Assert.assertEquals(note,notePad.getNoteContent());
+    @Test
+    @DisplayName("GL 457,460: Create, Save, Delete notes for an unregistered user")
+    public void testCreateAndDeleteNote()
+    {
+        String title = "My New Note";
+        String note = "Hello!";
+        notePad.open()
+                .setTitle(title)
+                .setContent(note)
+                .saveNote();
+        Assert.assertEquals(title,notePad.getNoteTitle());
+        Assert.assertEquals(note,notePad.getNoteContent());
 
-       notePad.deleteNote();
-   }
+        notePad.deleteNote();
+    }
 
     @Test
     @DisplayName("GL-477:Create a free account")
@@ -63,9 +63,25 @@ public class NotepadTest {
         notePad.clickLoginButton();
     }
 
-   @After
-   public void closeBrowser()
-   {
-       driver.quit();
-   }
+    @Test
+    @DisplayName("Create New Folder")
+
+    public void testCreateNewFolder()
+    {
+        testLogin();
+        String folderName = "New Folder";
+        notePad.open()
+                .clickManageFolderBtn()
+                .fillNewFolderField(folderName);
+        Assert.assertEquals(folderName,notePad.getNewFolderName());
+                notePad.clickCreateNewBtn()
+                .clickCloseManageFolderBtn();
+    }
+
+
+    @After
+    public void closeBrowser()
+    {
+        driver.quit();
+    }
 }

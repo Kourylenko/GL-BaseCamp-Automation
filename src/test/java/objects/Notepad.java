@@ -26,6 +26,12 @@ public class Notepad {
     private static final By passwordLoginField = By.xpath("//input[@placeholder='Enter Password']");
     private static final By loginButton = By.xpath("//button[contains(text(),'Login')]");
 
+    //    testCreateNewFolder
+    private static final By manageFolderBtn = By.xpath("//a[contains(text(),'Manage Folders')]");
+    private static final By newFolderField = By.xpath("//input[@placeholder='Folder Name']");
+    private static final By createNewFolderBtn = By.xpath("//input[@value='Create New']");
+    private static final By closeManageFolder = By.xpath("//*[@class='modal in']");
+
 
     private WebDriver driver;
     private WebDriverWait wait;
@@ -60,7 +66,7 @@ public class Notepad {
     public Notepad saveNote()
     {
         driver.findElement(saveNoteButton).click();
-        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(".alert, alert-warning"), "You have saved your note as a"));
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//*[@class='alert alert-danger']"), "You have saved your note as a"));
         return  this;
     }
     @Step
@@ -79,9 +85,10 @@ public class Notepad {
         driver.findElement(deleteNoteButton).click();
         Alert alert = wait.until(ExpectedConditions.alertIsPresent());
         alert.accept();
-        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("savedNotes"), "No note here."));
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//*[@id='savedNotes']"), "No note here."));
         return  this;
     }
+
 
 //    testCreateNewAccount
 
@@ -114,8 +121,10 @@ public class Notepad {
     public Notepad clickCreateAccountButton()
     {
         driver.findElement(createAccountButton).click();
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//*[@class='alert alert-danger']"), "Email also exists in system. Please Login."));
         return this;
     }
+
 
 //    testLoginInAccount
 
@@ -146,6 +155,45 @@ public class Notepad {
         return driver.findElement(emailLoginField).getAttribute("value");
     }
 
+
+//    testCreateNewFolder
+
+    @Step
+    public Notepad clickManageFolderBtn()
+    {
+        driver.findElement(manageFolderBtn).click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(newFolderField));
+        return this;
+    }
+
+    @Step
+    public Notepad fillNewFolderField(String folderName)
+    {
+        driver.findElement(newFolderField).sendKeys(folderName);
+        return this;
+    }
+    @Step
+    public String getNewFolderName()
+    {
+        return driver.findElement(newFolderField).getAttribute("value");
+
+    }
+
+    @Step
+    public Notepad clickCreateNewBtn()
+    {
+        driver.findElement(createNewFolderBtn).click();
+        wait.until(ExpectedConditions.elementToBeClickable(closeManageFolder));
+        return this;
+    }
+
+    @Step
+    public Notepad clickCloseManageFolderBtn()
+    {
+        driver.findElement(closeManageFolder).click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),folderName)]")));
+        return this;
+    }
 }
 
 
