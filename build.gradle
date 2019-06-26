@@ -36,8 +36,12 @@ dependencies {
     testCompile("io.github.bonigarcia:webdrivermanager:3.6.1")
     testCompile group: 'io.qameta.allure', name: 'allure-junit4', version: '2.12.1'
 
-    
+    compile 'com.codeborne:selenide:5.1.0'
     compile 'io.cucumber:cucumber-java:4.2.5'
+
+    
+    
+
 
 
 }
