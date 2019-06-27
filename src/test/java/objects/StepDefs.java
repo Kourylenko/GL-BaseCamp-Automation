@@ -34,8 +34,6 @@ public class StepDefs {
     public void iSawMessage() throws Throwable {
         $x("//p[@class='alert alert-warning']").shouldHave(Condition.text("You have saved your note as a"));
     }
-
-
 }
 
 
